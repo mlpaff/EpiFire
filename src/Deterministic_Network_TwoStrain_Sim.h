@@ -12,10 +12,9 @@ using namespace std;
 class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
 
     private:
-        const double t0_1; //introduction time disease 1
-        const double t0_2; //introduction time disease 2
         const double ps_t0; //probability neighbor is initially susceptible
         const vector<double> deg_dist;
+        const vector<double> deg_susc;
         const double beta1; // transmission rate 1
         const double beta2; // transmission rate 2
         const double gamma1; // recovery rate 1
@@ -23,17 +22,16 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
 
 
     public:
-        Deterministic_Network_TwoStrain_Sim() : t0_1(0.0), t0_2(0.0), ps_t0(0.0),
-            beta1(0.0), beta2(0.0), gamma1(0.0), gamma2(0.0){ nbins=7;}
-        Deterministic_Network_TwoStrain_Sim(double t0_1_param, double t0_2_param, double ps_t0_param, double beta1_param, double beta2_param, double gamma1_param, double gamma2_param, vector<double> deg_dist_param):
-            t0_1(t0_1_param),
-            t0_2(t0_2_param),
+        Deterministic_Network_TwoStrain_Sim() : ps_t0(0.0), beta1(0.0),
+            beta2(0.0), gamma1(0.0), gamma2(0.0){ nbins=7;}
+        Deterministic_Network_TwoStrain_Sim(double ps_t0_param, double beta1_param, double beta2_param, double gamma1_param, double gamma2_param, vector<double> deg_dist_param, vector<double> deg_susc_param):
             ps_t0(ps_t0_param),
             beta1(beta1_param),
             beta2(beta2_param),
             gamma1(gamma1_param),
             gamma2(gamma2_param),
-            deg_dist(deg_dist_param) {
+            deg_dist(deg_dist_param),
+            deg_susc(deg_susc_param) {
                 nbins=7;
             }
         ~Deterministic_Network_TwoStrain_Sim() {};
