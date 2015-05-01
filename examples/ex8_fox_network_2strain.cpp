@@ -2,12 +2,10 @@
 
 int main() {
 
-
     // Setup Initial y[] conditions for initialization
-    double pop_size = 10000.0;
     double theta = 1.0;
-    double pI1 = 1/pop_size;
-    double pI2 = 1/pop_size;
+    double pI1 = 0.001;
+    double pI2 = 0.001;
 
     // Setup model parameters
     double ps_t0 = 1 - pI1 - pI2;
@@ -30,12 +28,23 @@ int main() {
     degree_dist.push_back(0.11);
     degree_dist.push_back(0.11);
 
-    suscs
+    vector<double> degree_susceptibility;
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
+    degree_susceptibility.push_back(ps_t0);
 
-    Deterministic_Network_TwoStrain_Sim sim(ps_t0, beta1, beta2, gamma1, gamma2, degree_dist, degree_dist);
+
+    Deterministic_Network_TwoStrain_Sim sim(ps_t0, beta1, beta2, gamma1, gamma2, degree_dist, degree_susceptibility);
     sim.initialize(theta, pI1, pI2);
     int i = 0;
-    while (i < 100) {
+    while (i < 99) {
         sim.printY();
         sim.step_simulation(1);
         i++;
@@ -45,6 +54,7 @@ int main() {
     //sim.run_simulation();
 
     return 0;
+
 }
 
 

@@ -1,9 +1,20 @@
+CFLAGS=--ansi --pedantic -O2
+#CFLAGS=--ansi --pedantic -g
+INCLUDE= -I../src/
+LDFLAGS=  ../src/*.o
 
-all: tmp_research
+all: epifire gsl miller_2013_fig3
 
-tmp_research: tmp_research.cpp
-	g++ -I ../src ../src/*.o  tmp_research.cpp -o tmp_research
+epifire:
+	$(MAKE) -C ../src/
 
-epi_sim: epi_sim.cpp MultiSeason_Sim.h
-	g++ -O2 -I ../src ../src/*.o MultiSeason_Sim.h epi_sim.cpp -o epi_sim
+gsl:
+	$(MAKE) -C ../gsl_subset/
+
+miller_2013_fig3: miller_2013_fig3.cpp
+	g++ $(CFLAGS) miller_2013_fig3.cpp $(INCLUDE) -I../gsl_subset/ $(LDFLAGS) ../gsl_subset/*.o -o miller_2013_fig3
+
+clean:
+	rm -f miller_2013_fig3
+
 

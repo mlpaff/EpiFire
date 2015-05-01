@@ -30,7 +30,8 @@ class DiffEq_Sim {
         double* y;
 
         void printY() { for(int i=0; i < nbins; i++) { cout << y[i] << " ";} cout << endl; }
-        
+
+
         vector<double> get_state() {
             vector<double> C;
             C.assign(y, y + nbins);

@@ -61,11 +61,14 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
             return current_recovered_1() + current_recovered_2();
         }
 
+        double init_susceptibility(int degree){
+            return deg_susc[degree];
+        }
 
         double g( double theta) {
             double val = 0;
             for (unsigned int i = 0; i<deg_dist.size(); i++) {
-                val += deg_dist[i] * pow(theta,i);
+                val += deg_dist[i] * pow(theta,i) * init_susceptibility(i);
             }
             return val;
         }
@@ -73,7 +76,7 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
         double dg( double theta) {
             double val = 0;
             for (unsigned int i = 1; i<deg_dist.size(); i++) {
-                val += (i) * deg_dist[i] * pow(theta,i-1);
+                val += (i) * deg_dist[i] * pow(theta,i-1) * init_susceptibility(i);
             }
             return val;
         }
@@ -81,7 +84,7 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
         double ddg( double theta) {
             double val = 0;
             for (unsigned int i = 2; i<deg_dist.size(); i++) {
-                val += (i) * (i-1) *deg_dist[i] * pow(theta,i-2);
+                val += (i) * (i-1) *deg_dist[i] * pow(theta,i-2) * init_susceptibility(i);
             }
             return val;
         }
