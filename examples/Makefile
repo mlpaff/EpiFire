@@ -3,7 +3,7 @@ CFLAGS=--ansi --pedantic -O2
 INCLUDE= -I../src/
 LDFLAGS=  ../src/*.o
 
-all: epifire gsl test_network path_length_test ex1_mass_action ex2_percolation ex3_chain_binomial ex4_dynamic_net ex5_diff_eq ex6_network_diff_eq ex7_gillespie_network_SEIRS 
+all: epifire gsl test_network path_length_test ex1_mass_action ex2_percolation ex3_chain_binomial ex4_dynamic_net ex5_diff_eq ex6_network_diff_eq ex7_gillespie_network_SEIRS ex8_fox_network_2strain
 
 epifire: 
 	$(MAKE) -C ../src/
@@ -38,5 +38,9 @@ ex6_network_diff_eq: ex6_network_diff_eq.cpp
 ex7_gillespie_network_SEIRS: ex7_gillespie_network_SEIRS.cpp
 	g++ $(CFLAGS) ex7_gillespie_network_SEIRS.cpp $(INCLUDE) $(LDFLAGS) -o ex7_gillespie_network_SEIRS
 
+ex8_fox_network_2strain: ex8_fox_network_2strain.cpp
+	g++ $(CFLAGS) ex8_fox_network_2strain.cpp $(INCLUDE) -I../gsl_subset/ $(LDFLAGS) ../gsl_subset/*.o -o ex8_fox_network_2strain
+
+
 clean:
-	rm -f test_network ex1_mass_action ex2_percolation ex3_chain_binomial ex4_dynamic_net ex5_diff_eq ex6_network_diff_eq ex7_gillespie_network_SEIRS
+	rm -f path_length_test test_network ex1_mass_action ex2_percolation ex3_chain_binomial ex4_dynamic_net ex5_diff_eq ex6_network_diff_eq ex7_gillespie_network_SEIRS ex8_fox_network_2strain
