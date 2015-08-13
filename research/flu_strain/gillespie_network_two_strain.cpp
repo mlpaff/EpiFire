@@ -16,7 +16,7 @@ int main(int argc,char *argv[]) {
     int intro_time;
     intro_time = atoi( argv[3] );
 
-    int num_reps = 10;
+    int num_reps = 1000;
 
     for(int i =1; i <= num_reps; i++){
         cout << "Simulation number: " << i << endl;
