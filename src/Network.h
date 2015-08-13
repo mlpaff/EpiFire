@@ -185,7 +185,10 @@ class Network
         // distribution parameters.
         bool rand_connect_stubs(vector<Edge*> stubs);
 
-        // Gets rid of self-loops and multi-edges.  This is called automatically
+        // function to give fully connected graph of size N
+        bool connect_all_nodes();
+
+            // Gets rid of self-loops and multi-edges.  This is called automatically
         // by erdos_renyi() and all of the rand_connect* functions.  You only
         // need it if you are using your own algorithm to connect nodes.
         bool lose_loops();

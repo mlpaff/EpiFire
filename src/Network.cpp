@@ -351,6 +351,19 @@ bool Network::rand_connect_user(vector<double> dist) {
 }
 
 
+bool Network::connect_all_nodes(){
+    int n = size();
+    vector<Node*> nodes = get_nodes();
+    for (int a = 0; a < n - 1; a++) {
+        for (int b = a + 1; b < n; b++) {
+            nodes[a]->connect_to(nodes[b]);
+        }
+    }
+    return true;
+}
+
+
+
 // use this only if the generating degree dist has already been stored
 bool Network::_rand_connect() {
     if (_assign_deg_series()) {
