@@ -3,7 +3,7 @@ CFLAGS=--ansi --pedantic -O2
 INCLUDE= -I../../src/
 LDFLAGS=  ../../src/*.o
 
-all: epifire gsl gillespie_network_two_strain
+all: epifire gsl gillespie_network_two_strain gillespie_plaw_two_strain
 
 epifire: 
 	$(MAKE) -C ../../src/
@@ -15,7 +15,9 @@ gsl:
 gillespie_network_two_strain: gillespie_network_two_strain.cpp
 	g++ $(CFLAGS) gillespie_network_two_strain.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_network_two_strain
 
+gillespie_plaw_two_strain: gillespie_plaw_two_strain.cpp
+	g++ $(CFLAGS) gillespie_plaw_two_strain.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_plaw_two_strain
 
 
 clean:
-	rm -f gillespie_network_two_strain
+	rm -f gillespie_network_two_strain gillespie_plaw_two_strain
