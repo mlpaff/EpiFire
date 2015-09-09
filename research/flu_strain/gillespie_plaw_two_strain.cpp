@@ -9,7 +9,7 @@ int main(int argc,char *argv[]) {
     //double alpha1 = argv[1]-0.0;
     double alpha1, alpha2, beta1, beta2, gamma1, gamma2, phi1, phi2;
     alpha1 = alpha2 = atof( argv[1] );
-    beta1 = 0.02842215;
+    beta1 = 0.35;
     beta2 = atof( argv[2] );
     gamma1 = gamma2 = 1.0/5.0;
     phi1 = phi2 = atof( argv[4]);
@@ -20,9 +20,8 @@ int main(int argc,char *argv[]) {
 
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
-    vector<double> degree_dist = gen_trunc_powerlaw(2.0, 94.2, 1, 102);
     for(int i =1; i <= num_reps; i++){
-        net.rand_connect_user(degree_dist);
+        net.rand_connect_powerlaw(2.0, 689.0);
         Gillespie_TwoStrain_Network_Sim sim(&net, alpha1, alpha2, gamma1, gamma2, beta1, beta2, phi1, phi2, intro_time);
         cout << "Simulation number: " << i << endl;
         sim.reset();
