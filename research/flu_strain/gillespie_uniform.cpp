@@ -20,7 +20,7 @@ int main(int argc,char *argv[]) {
 
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
-    vector<int> degrees(10000, 5);
+    vector<int> degrees(10000, 4);
     net.rand_connect_explicit(degrees);
     for(int i =1; i <= num_reps; i++){
         Gillespie_TwoStrain_Network_Sim sim(&net, alpha1, alpha2, gamma1, gamma2, beta1, beta2, phi1, phi2, intro_time);
