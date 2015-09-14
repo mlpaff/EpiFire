@@ -165,7 +165,7 @@ class Gillespie_TwoStrain_Network_Sim {
         }
 
         void infect1(Node* node) {
-            assert(state_counts[S]+state_counts[S12]+state_counts[S21] > 0);
+            assert(state_counts[S] + state_counts[S12] + state_counts[S21] + state_counts[P2] > 0);
             int current_state;
             if(node->get_state() == S){
                 node->set_state(I01);
@@ -188,10 +188,14 @@ class Gillespie_TwoStrain_Network_Sim {
             // time to recovery
             double Tr = rand_exp(gamma1, &mtrand) + Now;
             // time to next contact
-            double Tc = rand_exp(beta1, &mtrand) + Now;
-            while ( Tc < Tr ) {     // does contact occur before recovery?
-                add_event(Tc, 'c', node); // potential transmission event
-                Tc += rand_exp(beta1, &mtrand);
+            vector<Node*> neighbors = node->get_neighbors();
+            if(neighbors.size() > 0){
+                for(int i=0; i<neighbors.size();i++){
+                    double Tc = rand_exp(beta1, &mtrand) + Now;
+                    if ( Tc < Tr ) {     // does contact occur before recovery?
+                        add_event(Tc, 'c', neighbors[i]);   // potential transmission event
+                    }
+                }
             }
 
             if(current_state==I01){
@@ -206,7 +210,7 @@ class Gillespie_TwoStrain_Network_Sim {
 
 
         void infect2(Node* node) {
-            assert(state_counts[S]+state_counts[S12]+state_counts[S21] > 0);
+            assert(state_counts[S] + state_counts[S12] + state_counts[S21] + state_counts[P1] > 0);
             int current_state;
             if(node->get_state() == S){
                 node->set_state(I02);
@@ -229,10 +233,14 @@ class Gillespie_TwoStrain_Network_Sim {
             // time to recovery
             double Tr = rand_exp(gamma2, &mtrand) + Now;
             // time to next contact
-            double Tc = rand_exp(beta2, &mtrand) + Now;
-            while ( Tc < Tr ) {     // does contact occur before recovery?
-                add_event(Tc, 'd', node); // potential transmission event
-                Tc += rand_exp(beta2, &mtrand);
+            vector<Node*> neighbors = node->get_neighbors();
+            if(neighbors.size() > 0){
+                for(int i=0; i<neighbors.size();i++){
+                    double Tc = rand_exp(beta2, &mtrand) + Now;
+                    if ( Tc < Tr ) {     // does contact occur before recovery?
+                        add_event(Tc, 'd', neighbors[i]);   // potential transmission event
+                    }
+                }
             }
 
             if(current_state==I02){
@@ -285,31 +293,21 @@ class Gillespie_TwoStrain_Network_Sim {
                 state_counts[I21]--;
                 state_counts[R]++;
             } else if (event.type == 'c' ) {
-                vector<Node*> neighbors = node->get_neighbors();
-                if (neighbors.size() > 0) {
-                    int rand_idx = mtrand.randInt(neighbors.size() - 1); // randInt includes endpoints
-                    Node* contact = neighbors[rand_idx];
-                    int contact_state = contact->get_state();
-                    if ( contact_state == S || contact_state == S21 ) {
-                        infect1(contact);
-                    } else if(contact_state==P2){
-                        if(mtrand.rand() < phi2){
-                            infect1(contact);
-                        }
+                int node_state = node->get_state();
+                if (node_state == S || node_state == S21){
+                    infect1(node);
+                } else if (node_state==P2 ){
+                    if(mtrand.rand() < phi2){
+                        infect1(node);
                     }
                 }
             } else if (event.type == 'd' ) {
-                vector<Node*> neighbors = node->get_neighbors();
-                if (neighbors.size() > 0) {
-                    int rand_idx = mtrand.randInt(neighbors.size() - 1); // randInt includes endpoints
-                    Node* contact = neighbors[rand_idx];
-                    int contact_state = contact->get_state();
-                    if ( contact_state == S || contact_state == S12 ) {
-                        infect2(contact);
-                    } else if( contact_state == P1 ){
-                        if(mtrand.rand() < phi1){
-                            infect2(contact);
-                        }
+                int node_state = node->get_state();
+                if (node_state == S || node_state == S12){
+                    infect2(node);
+                } else if (node_state==P1 ){
+                    if(mtrand.rand() < phi1){
+                        infect2(node);
                     }
                 }
             } else if (event.type == 'e' ) {

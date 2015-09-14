@@ -23,7 +23,7 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
 
     public:
         Deterministic_Network_TwoStrain_Sim() : ps_t0(0.0), beta1(0.0),
-            beta2(0.0), gamma1(0.0), gamma2(0.0){ nbins=7;}
+            beta2(0.0), gamma1(0.0), gamma2(0.0){ nbins=9;}
         Deterministic_Network_TwoStrain_Sim(double ps_t0_param, double beta1_param, double beta2_param, double gamma1_param, double gamma2_param, vector<double> deg_dist_param, vector<double> deg_susc_param):
             ps_t0(ps_t0_param),
             beta1(beta1_param),
@@ -32,7 +32,7 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
             gamma2(gamma2_param),
             deg_dist(deg_dist_param),
             deg_susc(deg_susc_param) {
-                nbins=7;
+                nbins=9;
             }
         ~Deterministic_Network_TwoStrain_Sim() {};
 
@@ -45,6 +45,8 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
             y[4] = pI2;
             y[5] = 0.0;
             y[6] = 0.0;
+            y[7] = 0.0;
+            y[8] = 0.0;
         }
 
         double current_susceptible() { return g( y[0] ); }
@@ -63,6 +65,15 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
 
         double init_susceptibility(int degree){
             return deg_susc[degree];
+        }
+
+        double growth_rate_1() {
+
+            return (-(beta1+gamma1) + beta1*ddg(1.0)/dg(1.0));
+        }
+
+        double growth_rate_2() {
+            return -(beta2+gamma2) + beta2*ddg(1.0)/dg(1.0);
         }
 
         double g( double theta) {
@@ -106,6 +117,8 @@ class Deterministic_Network_TwoStrain_Sim : public DiffEq_Sim {
             dydt[4] = beta2*pI2*dg(theta) - gamma2*I2; // dI2.dt
             dydt[5] = gamma1*I1;   //dR.dt
             dydt[6] = gamma2*I2;   //dR.dt
+            dydt[7] = beta1*pI1*dg(theta);  //dCumI1
+            dydt[8] = beta2*pI2*dg(theta);  //dCumI2
         }
 
 };
