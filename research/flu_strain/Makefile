@@ -3,7 +3,7 @@ CFLAGS=--ansi --pedantic -O2
 INCLUDE= -I../../src/
 LDFLAGS=  ../../src/*.o
 
-all: epifire gsl gillespie_network_two_strain gillespie_plaw_two_strain gillespie_uniform gillespie_er test
+all: epifire gsl gillespie_network_two_strain gillespie_plaw gillespie_uniform gillespie_er gillespie_exp
 
 epifire: 
 	$(MAKE) -C ../../src/
@@ -15,8 +15,8 @@ gsl:
 gillespie_network_two_strain: gillespie_network_two_strain.cpp
 	g++ $(CFLAGS) gillespie_network_two_strain.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_network_two_strain
 
-gillespie_plaw_two_strain: gillespie_plaw_two_strain.cpp
-	g++ $(CFLAGS) gillespie_plaw_two_strain.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_plaw_two_strain
+gillespie_plaw: gillespie_plaw.cpp
+	g++ $(CFLAGS) gillespie_plaw.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_plaw
 
 gillespie_uniform: gillespie_uniform.cpp
 	g++ $(CFLAGS) gillespie_uniform.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_uniform
@@ -24,8 +24,8 @@ gillespie_uniform: gillespie_uniform.cpp
 gillespie_er: gillespie_er.cpp
 	g++ $(CFLAGS) gillespie_er.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_er
 
-test: test.cpp
-	g++ $(CFLAGS) test.cpp $(INCLUDE) $(LDFLAGS) -o test
+gillespie_exp: gillespie_exp.cpp
+	g++ $(CFLAGS) gillespie_exp.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_exp
 
 clean:
-	rm -f gillespie_network_two_strain gillespie_plaw_two_strain gillespie_uniform gillespie_er test
+	rm -f gillespie_network_two_strain gillespie_plaw gillespie_uniform gillespie_er gillespie_exp
