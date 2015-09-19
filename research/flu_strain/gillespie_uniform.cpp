@@ -9,18 +9,18 @@ int main(int argc,char *argv[]) {
     //double alpha1 = argv[1]-0.0;
     double alpha1, alpha2, beta1, beta2, gamma1, gamma2, phi1, phi2;
     alpha1 = alpha2 = atof( argv[1] );
-    beta1 = 0.1750925;
+    beta1 = 0.115;
     beta2 = atof( argv[2] );
     gamma1 = gamma2 = 1.0/5.0;
     phi1 = phi2 = atof( argv[4]);
     int intro_time;
     intro_time = atoi( argv[3] );
 
-    int num_reps = 500;
+    int num_reps = 1000;
 
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
-    vector<int> degrees(10000, 4);
+    vector<int> degrees(10000, 5);
     net.rand_connect_explicit(degrees);
     for(int i =1; i <= num_reps; i++){
         Gillespie_TwoStrain_Network_Sim sim(&net, alpha1, alpha2, gamma1, gamma2, beta1, beta2, phi1, phi2, intro_time);
