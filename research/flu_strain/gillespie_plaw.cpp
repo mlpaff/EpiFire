@@ -9,7 +9,7 @@ int main(int argc,char *argv[]) {
     //double alpha1 = argv[1]-0.0;
     double alpha1, alpha2, beta1, beta2, gamma1, gamma2, phi1, phi2;
     alpha1 = alpha2 = atof( argv[1] );
-    beta1 = 0.04;
+    beta1 = 0.02;
     //beta1 = 0.06;
     beta2 = atof( argv[2] );
     gamma1 = gamma2 = 1.0/5.0;
@@ -17,7 +17,7 @@ int main(int argc,char *argv[]) {
     int intro_time;
     intro_time = atoi( argv[3] );
 
-    int num_reps = 1000;
+    int num_reps = 2000;
 
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
