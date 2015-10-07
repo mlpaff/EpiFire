@@ -78,109 +78,52 @@ class Gillespie_TwoStrain_Network_Sim {
             vector<Node*> nodes = rand_choose_nodes(1,2);
             add_event(intro_time, 'e',  nodes[0]);
 
+            printStatus();
             while (next_event() and Now < start_time + duration) {
                 if ((int) Now > day) {
-                    vector< vector<int> > states = network->get_states_by_degree();
-                    int counterS1 = 0;
-                    vector<int> s1Counts(states.size(),0);
-                    int counterS2 = 0;
-                    vector<int> s2Counts(states.size(),0);
-                    int counterI1 = 0;
-                    vector<int> i1Counts(states.size(),0);
-                    int counterI2 = 0;
-                    vector<int> i2Counts(states.size(),0);
-
-                    for(int i=0; i<states.size();i++){
-                        for(int j=0; j < states[i].size();j++){
-                            if(states[i][j] == S || states[i][j]==S21){
-                                counterS1 ++;
-                            }
-                            if(states[i][j] == S || states[i][j]==S12){
-                                counterS2 ++;
-                            }
-                            if(states[i][j] == I01 || states[i][j]==I21){
-                                counterI1 ++;
-                            }
-                            if(states[i][j] == I02 || states[i][j]==I12){
-                                counterI2 ++;
-                            }
-                        }
-                        s1Counts[i] = counterS1;
-                        s2Counts[i] = counterS2;
-                        i1Counts[i] = counterI1;
-                        i2Counts[i] = counterI2;
-                        counterS1 =0;
-                        counterS2 =0;
-                        counterI1 =0;
-                        counterI2 =0;
-                    }
-                    double meanVals = 0.0;
-                    double sums =0.0;
-                    vector<double> avgDegs(4, 0 );
-                    for(int i=0; i < s1Counts.size();i++){
-                        meanVals += i * s1Counts[i];
-                        sums += s1Counts[i];
-                    }
-                    if(sums==0) {
-                        avgDegs[0] = 0.0;
-                    } else{
-                        avgDegs[0] = meanVals / sums;
-                    }
-                    meanVals=0.0;
-                    sums=0.0;
-                    for(int i=0; i < s2Counts.size();i++){
-                        meanVals += i * s2Counts[i];
-                        sums += s2Counts[i];
-                    }
-                    if(sums==0) {
-                        avgDegs[1] = 0.0;
-                    } else{
-                        avgDegs[1] = meanVals / sums;
-                    }
-                    meanVals=0.0;
-                    sums=0.0;
-                    for(int i=0; i < i1Counts.size();i++){
-                        meanVals += i * i1Counts[i];
-                        sums += i1Counts[i];
-                    }
-                    if(sums==0) {
-                        avgDegs[2] = 0.0;
-                    } else{
-                        avgDegs[2] = meanVals / sums;
-                    }
-                    meanVals=0.0;
-                    sums=0.0;
-                    for(int i=0; i < i2Counts.size();i++){
-                        meanVals += i * i2Counts[i];
-                        sums += i2Counts[i];
-                    }
-                    if(sums==0) {
-                        avgDegs[3] = 0.0;
-                    } else{
-                        avgDegs[3] = meanVals / sums;
-                    }
                     //cout << fixed << setprecision(5);
-                    cout << (int) Now << ", "  << state_counts[S] << ", "
-                                          << state_counts[I01] << ", " 
-                                          << state_counts[I02] << ", " 
-                                          << state_counts[P1] << ", " 
-                                          << state_counts[P2] << ", " 
-                                          << state_counts[S12] << ", " 
-                                          << state_counts[S21] << ", " 
-                                          << state_counts[I12] << ", " 
-                                          << state_counts[I21] << ", " 
-                                          << state_counts[R] << ", " 
-                                          << state_counts[cumI1] << ", " 
-                                          << state_counts[cumI2] <<  ", "
-                                          << avgDegs[0] <<  ", "
-                                          << avgDegs[1] <<  ", "
-                                          << avgDegs[2] <<  ", "
-                                          << avgDegs[3] <<  endl; 
+                    printStatus();
                     day = (int) Now;
                 }
 
                 continue;
             }
+        }
+
+        void printStatus(){
+            vector<int> vS1;
+            vS1.push_back(S);
+            vS1.push_back(S21);
+            vector<int> vS2;
+            vS2.push_back(S);
+            vS2.push_back(S12);
+            vector<int> vI1;
+            vI1.push_back(I01);
+            vI1.push_back(I21);
+            vector<int> vI2;
+            vI2.push_back(I02);
+            vI2.push_back(I12);
+            vector<double> meanSDEff = network->mean_eff_deg_states(vS2);
+
+            cout << (int) Now << ", "
+              << state_counts[S] << ", "
+              << state_counts[I01] << ", " 
+              << state_counts[I02] << ", " 
+              << state_counts[P1] << ", " 
+              << state_counts[P2] << ", " 
+              << state_counts[S12] << ", " 
+              << state_counts[S21] << ", " 
+              << state_counts[I12] << ", " 
+              << state_counts[I21] << ", " 
+              << state_counts[R] << ", "
+              << state_counts[cumI1] << ", "
+              << state_counts[cumI2] <<  ", "
+              << network->mean_deg_states(vS1) <<  ", "
+              << network->mean_deg_states(vS2) <<  ", "
+              << network->mean_deg_states(vI1) <<  ", "
+              << network->mean_deg_states(vI2) << ", "
+              << meanSDEff[0] << ", "
+              << meanSDEff[1] << endl;
         }
 
         int current_epidemic_size1() {

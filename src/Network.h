@@ -251,9 +251,11 @@ class Network
                                  // measure of clustering of nodes in node_set;
                                  // Calculate k-shell decomposition for all nodes
         map<Node*,int> k_shell_decomposition();
-                                 // Implemented, but slower
+        // Implemented, but slower
         //map<string,int> k_shell_decomposition_alt();
 
+        double mean_deg_states (vector<int> &states);
+        vector<double> mean_eff_deg_states(vector<int> &states);
         double transitivity() { return transitivity(get_nodes()); }
                                  // if node_set is empty, use all nodes
         double transitivity(vector<Node*> node_set);

@@ -659,6 +659,44 @@ double Network::mean_deg () {
     return mean(get_deg_series() );
 }
 
+double Network::mean_deg_states (vector<int> &states) {
+    vector< vector<int> > statesDeg = get_states_by_degree();
+    vector<int> stateCounts;
+    for(unsigned int i=0; i<statesDeg.size();i++){
+        for(unsigned int j=0; j < statesDeg[i].size();j++){
+            for(unsigned int k=0; k<states.size(); k++){
+                if(statesDeg[i][j]==states[k]){
+                    stateCounts.push_back( i );
+                }
+            }
+        }
+    }
+
+    return(mean(stateCounts));
+}
+
+vector<double> Network::mean_eff_deg_states (vector<int> &states) {
+    vector<Node*> nodes = get_nodes();
+    vector<int> stateCounts;
+    for(unsigned int i=0; i<nodes.size();i++){
+        for(unsigned int j=0; j< states.size(); j++){
+            if(nodes[i]->get_state()==states[j]){
+                int nCount = 0;
+                vector<Node*> neighbors = nodes[i]->get_neighbors();
+                for(unsigned int n=0; n<neighbors.size();n++){
+                    if(neighbors[n]->get_state()==states[j]){
+                        nCount++;
+                    }
+                }
+                stateCounts.push_back(nCount);
+            }
+        }
+    }
+    vector<double> meanSD;
+    meanSD.push_back(mean(stateCounts));
+    meanSD.push_back(stdev(stateCounts));
+    return(meanSD);
+}
 
 map<Node*, int> Network::k_shell_decomposition() {
     map<Node*, int> ks;
