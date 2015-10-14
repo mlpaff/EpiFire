@@ -684,8 +684,10 @@ vector<double> Network::mean_eff_deg_states (vector<int> &states) {
                 int nCount = 0;
                 vector<Node*> neighbors = nodes[i]->get_neighbors();
                 for(unsigned int n=0; n<neighbors.size();n++){
-                    if(neighbors[n]->get_state()==states[j]){
-                        nCount++;
+                    for(unsigned int k=0; k<states.size();k++){
+                        if(neighbors[n]->get_state()==states[k]){
+                            nCount++;
+                        }
                     }
                 }
                 stateCounts.push_back(nCount);
