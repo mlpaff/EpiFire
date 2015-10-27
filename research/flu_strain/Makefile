@@ -3,7 +3,7 @@ CFLAGS=--ansi --pedantic -O2
 INCLUDE= -I../../src/
 LDFLAGS=  ../../src/*.o
 
-all: epifire gsl gillespie_network_two_strain gillespie_plaw gillespie_uniform gillespie_er gillespie_exp
+all: epifire gsl gillespie_network_two_strain gillespie_plaw gillespie_uniform gillespie_er gillespie_exp gill_SEIR_exp gill_SEIR_unif
 
 epifire: 
 	$(MAKE) -C ../../src/
@@ -27,5 +27,11 @@ gillespie_er: gillespie_er.cpp
 gillespie_exp: gillespie_exp.cpp
 	g++ $(CFLAGS) gillespie_exp.cpp $(INCLUDE) $(LDFLAGS) -o gillespie_exp
 
+gill_SEIR_unif: gill_SEIR_unif.cpp
+	g++ $(CFLAGS) gill_SEIR_unif.cpp $(INCLUDE) $(LDFLAGS) -o gill_SEIR_unif
+
+gill_SEIR_exp: gill_SEIR_exp.cpp
+	g++ $(CFLAGS) gill_SEIR_exp.cpp $(INCLUDE) $(LDFLAGS) -o gill_SEIR_exp
+
 clean:
-	rm -f gillespie_network_two_strain gillespie_plaw gillespie_uniform gillespie_er gillespie_exp
+	rm -f gillespie_network_two_strain gillespie_plaw gillespie_uniform gillespie_er gillespie_exp gill_SEIR_unif gill_SEIR_exp
