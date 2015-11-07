@@ -8,7 +8,7 @@ int main(int argc,char *argv[]) {
 
     double alpha1, alpha2, beta1, beta2, gamma1, gamma2, phi1, phi2, eta1, eta2;
     alpha1 = alpha2 = atof( argv[1] );
-    beta1 = 0.1410806;
+    beta1 = 0.03024476;
     beta2 = atof( argv[2] );
     eta1 = eta2 = 1.0/2.62;
     gamma1 = gamma2 = 1.0/3.38;
@@ -20,8 +20,9 @@ int main(int argc,char *argv[]) {
 
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
-    vector<int> degrees(10000, 5);
+    vector<int> degrees(10000, 16);
     net.rand_connect_explicit(degrees);
+    //cout << net.mean_deg() << endl;
     for(int i =1; i <= num_reps; i++){
         Gillespie_SEIR_TwoStrain_Network sim(&net, alpha1, alpha2, eta1, eta2, gamma1, gamma2, beta1, beta2, phi1, phi2, intro_time);
         cout << "Simulation number: " << i << endl;

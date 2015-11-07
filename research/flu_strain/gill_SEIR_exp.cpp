@@ -8,7 +8,7 @@ int main(int argc,char *argv[]) {
 
     double alpha1, alpha2, beta1, beta2, gamma1, gamma2, phi1, phi2, eta1, eta2;
     alpha1 = alpha2 = atof( argv[1] );
-    beta1 = 0.07763432;
+    beta1 = 0.01884566;
     beta2 = atof( argv[2] );
     eta1 = eta2 = 1.0/2.62;
     gamma1 = gamma2 = 1.0/3.38;
@@ -22,8 +22,8 @@ int main(int argc,char *argv[]) {
     net.populate(10000);
     for(int i =1; i <= num_reps; i++){
         net.clear_edges();
-        net.rand_connect_exponential(0.222);
-        //cout << net.mean_deg() << endl;
+        net.rand_connect_exponential(0.06453487);
+        // cout << net.mean_deg() << endl;
         Gillespie_SEIR_TwoStrain_Network sim(&net, alpha1, alpha2, eta1, eta2, gamma1, gamma2, beta1, beta2, phi1, phi2, intro_time);
         cout << "Simulation number: " << i << endl;
         sim.reset();
