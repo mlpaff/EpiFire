@@ -694,10 +694,14 @@ vector<double> Network::mean_eff_deg_states (vector<int> &states) {
             }
         }
     }
-    vector<double> meanSD;
-    meanSD.push_back(mean(stateCounts));
-    meanSD.push_back(stdev(stateCounts));
-    return(meanSD);
+    vector<int> stateCountsSq(stateCounts.size());
+    for(unsigned int i=0;i<stateCounts.size();i++){
+        stateCountsSq[i] = stateCounts[i]*stateCounts[i];
+    }
+    vector<double> means;
+    means.push_back(mean(stateCounts));
+    means.push_back(mean(stateCountsSq));
+    return(means);
 }
 
 map<Node*, int> Network::k_shell_decomposition() {

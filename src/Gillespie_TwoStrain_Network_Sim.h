@@ -122,8 +122,8 @@ class Gillespie_TwoStrain_Network_Sim {
               << network->mean_deg_states(vS2) <<  ", "
               << network->mean_deg_states(vI1) <<  ", "
               << network->mean_deg_states(vI2) << ", "
-              << meanSDEff[0] << ", "
-              << meanSDEff[1] << endl;
+              << meanSDEff[0] << ", "               // mean degree
+              << meanSDEff[1] << endl;               // mean square degree
         }
 
         int current_epidemic_size1() {
