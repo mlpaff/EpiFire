@@ -82,7 +82,7 @@ class Gillespie_SEIR_TwoStrain_Network {
             vector<Node*> nodes = rand_choose_nodes(1,2);
             add_event(intro_time, 'e',  nodes[0]);
 
-            printStatus();
+            //printStatus();
             while (next_event() and Now < start_time + duration) {
                 if ((int) Now > day) {
                     //cout << fixed << setprecision(5);
@@ -143,6 +143,7 @@ class Gillespie_SEIR_TwoStrain_Network {
         }
 
         int reset() {
+            // Look this up
             Now = 0.0;
             vector<Node*> nodes = network->get_nodes();
             for (unsigned int i = 0; i < network->size(); i++) nodes[i]->set_state(S);
@@ -217,6 +218,8 @@ class Gillespie_SEIR_TwoStrain_Network {
                 state_counts[P2]--;  // decrement susceptible groupjj
                 state_counts[E21]++;      // increment exposed group
                 current_state=E21;
+            } else {
+                cerr << "Unknown state type encountered in infection: " << node->get_state() << "\nQuitting.\n";
             }
            // state_counts[cumI1]++;
 
@@ -235,8 +238,9 @@ class Gillespie_SEIR_TwoStrain_Network {
             if(neighbors.size() > 0){
                 for(int i=0; i<neighbors.size();i++){
                     double Tc = rand_exp(beta1, &mtrand) + Ti;
-                    if ( Tc < Tr ) {     // does contact occur before recovery?
+                    while ( Tc < Tr ) {     // does contact occur before recovery?
                         add_event(Tc, 'c', neighbors[i]);   // potential transmission event
+                        Tc = rand_exp(beta1, &mtrand) + Tc;
                     }
                 }
             }
@@ -270,6 +274,8 @@ class Gillespie_SEIR_TwoStrain_Network {
                 state_counts[P1]--;  // decrement susceptible groupjj
                 state_counts[E12]++;      // increment exposed group
                 current_state=E12;
+            } else {
+                cerr << "Unknown state type encountered in infection 2: " << node->get_state() << "\nQuitting.\n";
             }
             //state_counts[cumI2]++;
 
@@ -288,8 +294,9 @@ class Gillespie_SEIR_TwoStrain_Network {
             if(neighbors.size() > 0){
                 for(int i=0; i<neighbors.size();i++){
                     double Tc = rand_exp(beta2, &mtrand) + Ti;
-                    if ( Tc < Tr ) {     // does contact occur before recovery?
+                    while ( Tc < Tr ) {     // does contact occur before recovery?
                         add_event(Tc, 'd', neighbors[i]);   // potential transmission event
+                        Tc = Tc + rand_exp(beta2, &mtrand);
                     }
                 }
             }

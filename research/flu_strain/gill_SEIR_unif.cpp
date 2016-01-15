@@ -21,9 +21,12 @@ int main(int argc,char *argv[]) {
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
     vector<int> degrees(10000, 16);
-    net.rand_connect_explicit(degrees);
-    //cout << net.mean_deg() << endl;
+    //cout << net.get_biggest_component().size() << endl;
+    
     for(int i =1; i <= num_reps; i++){
+        net.clear_edges();
+        net.rand_connect_explicit(degrees);
+        // cout << net.mean_deg()<<endl;
         Gillespie_SEIR_TwoStrain_Network sim(&net, alpha1, alpha2, eta1, eta2, gamma1, gamma2, beta1, beta2, phi1, phi2, intro_time);
         cout << "Simulation number: " << i << endl;
         sim.reset();
