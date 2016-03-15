@@ -1,0 +1,5 @@
+/gsl_subset
+*.o
+*.exe
+*.pdf
+*.a
