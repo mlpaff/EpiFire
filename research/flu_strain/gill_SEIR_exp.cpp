@@ -8,7 +8,8 @@ int main(int argc,char *argv[]) {
 
     double alpha1, alpha2, beta1, beta2, gamma1, gamma2, phi1, phi2, eta1, eta2;
     alpha1 = alpha2 = atof( argv[1] );
-    beta1 = 0.01884566;
+    // beta1 = 0.01884566;
+    beta1 = 0.02896289;
     beta2 = atof( argv[2] );
     eta1 = eta2 = 1.0/2.62;
     gamma1 = gamma2 = 1.0/3.38;

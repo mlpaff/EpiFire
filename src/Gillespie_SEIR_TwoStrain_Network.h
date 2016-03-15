@@ -82,15 +82,41 @@ class Gillespie_SEIR_TwoStrain_Network {
             vector<Node*> nodes = rand_choose_nodes(1,2);
             add_event(intro_time, 'e',  nodes[0]);
 
-            //printStatus();
+            printStatus();
+            //printNetStatus();
             while (next_event() and Now < start_time + duration) {
                 if ((int) Now > day) {
                     //cout << fixed << setprecision(5);
                     printStatus();
+                    //printNetStatus();
                     day = (int) Now;
                 }
 
                 continue;
+            }
+        }
+
+        void printNetStatus(){
+            vector<int> vS2;
+            vS2.push_back(S);
+            vS2.push_back(S12);
+
+            vector< vector<int> > stateDeg = network->get_states_by_degree();
+            cout << (int) Now << ", ";
+            for(int i=0; i<stateDeg.size(); i++){
+                int suscCount =0;
+                for(int j=0; j<stateDeg[i].size(); j++){
+                    for(int k=0; k < vS2.size();k++){
+                        if(stateDeg[i][j]==vS2[k]){
+                            suscCount ++;
+                        }
+                    }
+                }
+                if(i==(stateDeg.size()-1)) {
+                    cout << suscCount << endl;
+                }else{
+                    cout << suscCount << ", ";
+                }
             }
         }
 
