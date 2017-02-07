@@ -3,7 +3,7 @@ CFLAGS=--ansi --pedantic -O2
 INCLUDE= -I../../src/
 LDFLAGS=  ../../src/*.o
 
-all: epifire gsl er_vax_sim
+all: epifire gsl vax_sim
 
 epifire: 
 	$(MAKE) -C ../../src/
@@ -11,8 +11,8 @@ epifire:
 gsl:
 	$(MAKE) -C ../../gsl_subset/
 
-er_vax_sim: er_vax_sim.cpp
-	g++ $(CFLAGS) er_vax_sim.cpp $(INCLUDE) $(LDFLAGS) -o er_vax_sim
+vax_sim: vax_sim.cpp
+	g++ $(CFLAGS) vax_sim.cpp $(INCLUDE) $(LDFLAGS) -o vax_sim
 
 clean:
-	rm -f er_vax_sim
+	rm -f vax_sim
