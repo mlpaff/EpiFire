@@ -82,13 +82,12 @@ class Gillespie_SEIR_TwoStrain_Network {
             vector<Node*> nodes = rand_choose_nodes(1,2);
             add_event(intro_time, 'e',  nodes[0]);
 
-            printStatus();
-            //printNetStatus();
+            //printStatus();
+            printNetStatus();
             while (next_event() and Now < start_time + duration) {
                 if ((int) Now > day) {
-                    //cout << fixed << setprecision(5);
-                    printStatus();
-                    //printNetStatus();
+                    //printStatus();
+                    printNetStatus();
                     day = (int) Now;
                 }
 

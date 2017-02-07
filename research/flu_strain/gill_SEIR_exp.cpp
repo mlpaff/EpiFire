@@ -8,8 +8,8 @@ int main(int argc,char *argv[]) {
 
     double alpha1, alpha2, beta1, beta2, gamma1, gamma2, phi1, phi2, eta1, eta2;
     alpha1 = alpha2 = atof( argv[1] );
-    // beta1 = 0.01884566;
-    beta1 = 0.02896289;
+    beta1 = 0.01884566;  // 2008 season
+    //beta1 = 0.02896289;     //2003 season
     beta2 = atof( argv[2] );
     eta1 = eta2 = 1.0/2.62;
     gamma1 = gamma2 = 1.0/3.38;
@@ -17,7 +17,7 @@ int main(int argc,char *argv[]) {
     int intro_time;
     intro_time = atoi( argv[3] );
 
-    int num_reps = 5000;
+    int num_reps = 1;
 
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
