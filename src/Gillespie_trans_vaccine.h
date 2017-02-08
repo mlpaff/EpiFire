@@ -73,6 +73,7 @@ class Gillespie_trans_vaccine {
             }
             
             while (next_event()) { // Let all vaccination transmission occur
+                //printStatus();
                 continue;
             }
             
@@ -80,6 +81,7 @@ class Gillespie_trans_vaccine {
             double start_time = Now;
             int day = (int) Now;
             rand_infect(init_infect, 2);
+            printStatus();
             while (next_event() and Now < start_time + duration) {
                 if ((int) Now > day) {
                     printStatus();
