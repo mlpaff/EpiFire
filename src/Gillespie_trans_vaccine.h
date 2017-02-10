@@ -123,25 +123,36 @@ class Gillespie_trans_vaccine {
         }
 
         // choose n nodes without replacement
-        vector<Node*> rand_choose_nodes (int n) {
+        vector<Node*> rand_choose_susceptible_nodes (int n) {
             assert(n > -1 and n <= network->size());
             vector<Node*> nodes = network->get_nodes();
             vector<Node*> sample(n);
             vector<int> sample_ids(n);
-
-            int all_susceptible = 0;
-            while(all_susceptible==0){
+            //vector<int> susceptible_ids(n);
+            vector<int> susceptible_ids;
+            //int susc_index = 0;
+            do{
                 rand_nchoosek(network->size(), sample_ids, &mtrand);
-                all_susceptible=1;
                 for (unsigned int i = 0; i < sample_ids.size(); i++) {
-                    if(nodes[ sample_ids[i] ]->get_state() != S){
-                        all_susceptible = 0;
+                    if(nodes[ sample_ids[i] ]->get_state() == S && 
+                        find(susceptible_ids.begin(), susceptible_ids.end(), sample_ids[i]) == susceptible_ids.end()){
+                        //susceptible_ids[susc_index] = sample_ids[i];
+                        //susc_index ++;
+                        susceptible_ids.push_back(sample_ids[i]);
+                        if(susceptible_ids.size() == n){
+                            break;
+                        }
                     }
                 }
-            }
+                //for(unsigned int i = 0; i < susceptible_ids.size(); i++){
+                //   cout << nodes[ susceptible_ids[i] ]->get_state() << ", ";
+                //}
+                //cout << endl;
+            } while(susceptible_ids.size() < n);
+
             Node* node;
-            for (unsigned int i = 0; i < sample_ids.size(); i++) {
-                node = nodes[ sample_ids[i] ];
+            for (unsigned int i = 0; i < susceptible_ids.size(); i++) {
+                node = nodes[ susceptible_ids[i] ];
                 sample[i] = node;
             }
             return sample;
@@ -149,7 +160,7 @@ class Gillespie_trans_vaccine {
 
 
         void rand_infect(int n, int disease) {   // randomly infect k people
-            vector<Node*> sample = rand_choose_nodes(n);
+            vector<Node*> sample = rand_choose_susceptible_nodes(n);
             for (unsigned int i = 0; i < sample.size(); i++) {
                 if(disease==1){
                     infect_vax(sample[i]);
