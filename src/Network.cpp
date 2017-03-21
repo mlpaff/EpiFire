@@ -656,7 +656,15 @@ vector<double> Network::get_gen_deg_dist () {
 
 
 double Network::mean_deg () {
-    return mean(get_deg_series() );
+    return mean( get_deg_series() );
+}
+
+double Network::mean_sq_deg () {
+    vector<int> deg_series = get_deg_series();
+    for(int i =0; i < deg_series.size(); i++){
+        deg_series[i] = pow(deg_series[i], 2);
+    }
+    return mean( deg_series );
 }
 
 double Network::mean_deg_states (vector<int> &states) {

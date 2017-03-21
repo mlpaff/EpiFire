@@ -248,6 +248,7 @@ class Network
                                  // dist to sample to draw new degrees (frequencies)
         vector<double> get_gen_deg_dist ();
         double mean_deg();       // calculated mean of the degree series
+        double mean_sq_deg();
                                  // measure of clustering of nodes in node_set;
                                  // Calculate k-shell decomposition for all nodes
         map<Node*,int> k_shell_decomposition();
