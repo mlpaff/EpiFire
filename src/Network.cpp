@@ -661,7 +661,7 @@ double Network::mean_deg () {
 
 double Network::mean_sq_deg () {
     vector<int> deg_series = get_deg_series();
-    for(int i =0; i < deg_series.size(); i++){
+    for(unsigned int i =0; i < deg_series.size(); i++){
         deg_series[i] = pow(deg_series[i], 2);
     }
     return mean( deg_series );
