@@ -7,7 +7,6 @@
 #include <queue>
 #include "Utility.h"
 #include "Network.h"
-#include "brent.h"
 
 using namespace std;
 using namespace brent;
