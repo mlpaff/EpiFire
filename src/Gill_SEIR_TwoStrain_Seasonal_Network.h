@@ -9,7 +9,6 @@
 #include "Network.h"
 
 using namespace std;
-using namespace brent;
 
 class Event {
     public:
