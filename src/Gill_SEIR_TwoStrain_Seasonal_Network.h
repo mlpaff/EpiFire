@@ -294,7 +294,7 @@ class Gillespie_SEIR_TwoStrain_Network {
                 hum_index = 364;
             }
 
-            double rnot_t = exp(-180.0 * hum_data[hum_index] + log(rnot_max - 1.0)) + 1.0;
+            double rnot_t = exp(-180.0 * hum_data[hum_index] + log(rnot_max - 0.1)) + 0.1;
             //cout << Now << " " << time_to_add_to_now << " " << hum_index << " " << hum_data[hum_index] << " " << rnot_t << endl;
             return((rnot_t * gamma / psi) / (1 - rnot_t / psi));
         }
