@@ -283,9 +283,9 @@ class Gillespie_SEIR_TwoStrain_Network {
         }
 
 
-        double get_seasonal_beta(double time_to_add_to_now, double beta_max, double gamma){
+        double get_seasonal_beta(double infect_plus_now, double beta_max, double gamma){
             double rnot_max = beta_max / (beta_max + gamma) * psi;
-            double timept = Now + time_to_add_to_now + seas_start_ind - shift;
+            double timept = infect_plus_now + seas_start_ind - shift;
             if(timept <0){
                 timept = 365 + timept;
             }
@@ -293,7 +293,9 @@ class Gillespie_SEIR_TwoStrain_Network {
             if(hum_index == -1 ){
                 hum_index = 364;
             }
-
+            //if(Now > 180 && Now < 183){
+            //cout << Now << " " << infect_plus_now << " "<< hum_index << " " << hum_data[hum_index] <<  endl;
+            //}
             double rnot_t = exp(-180.0 * hum_data[hum_index] + log(rnot_max - 0.1)) + 0.1;
             //cout << Now << " " << time_to_add_to_now << " " << hum_index << " " << hum_data[hum_index] << " " << rnot_t << endl;
             return((rnot_t * gamma / psi) / (1 - rnot_t / psi));
