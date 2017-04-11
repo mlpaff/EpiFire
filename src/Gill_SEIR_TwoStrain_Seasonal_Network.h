@@ -130,19 +130,19 @@ class Gillespie_SEIR_TwoStrain_Network {
         }
 
         void printStatus(){
-            vector<int> vS1;
-            vS1.push_back(S);
-            vS1.push_back(S21);
-            vector<int> vS2;
-            vS2.push_back(S);
-            vS2.push_back(S12);
-            vector<int> vI1;
-            vI1.push_back(I01);
-            vI1.push_back(I21);
-            vector<int> vI2;
-            vI2.push_back(I02);
-            vI2.push_back(I12);
-            vector<double> meanSDEff = network->mean_eff_deg_states(vS2);
+            //vector<int> vS1;
+            //vS1.push_back(S);
+            //vS1.push_back(S21);
+            //vector<int> vS2;
+            //vS2.push_back(S);
+            //vS2.push_back(S12);
+            //vector<int> vI1;
+            //vI1.push_back(I01);
+            //vI1.push_back(I21);
+            //vector<int> vI2;
+            //vI2.push_back(I02);
+            //vI2.push_back(I12);
+            //vector<double> meanSDEff = network->mean_eff_deg_states(vS2);
 
             cout << (int) Now << ", "
               << state_counts[S] << ", "
@@ -160,13 +160,13 @@ class Gillespie_SEIR_TwoStrain_Network {
               << state_counts[I21] << ", " 
               << state_counts[R] << ", "
               << state_counts[cumI1] << ", "
-              << state_counts[cumI2] <<  ", "
-              << network->mean_deg_states(vS1) <<  ", "
-              << network->mean_deg_states(vS2) <<  ", "
-              << network->mean_deg_states(vI1) <<  ", "
-              << network->mean_deg_states(vI2) << ", "
-              << meanSDEff[0] << ", "
-              << meanSDEff[1] << endl;
+              << state_counts[cumI2] <<  endl;
+              //<< network->mean_deg_states(vS1) <<  ", "
+              //<< network->mean_deg_states(vS2) <<  ", "
+              //<< network->mean_deg_states(vI1) <<  ", "
+              //<< network->mean_deg_states(vI2) << ", "
+              //<< meanSDEff[0] << ", "
+              //<< meanSDEff[1] << endl;
         }
 
         int current_epidemic_size1() {
@@ -296,7 +296,7 @@ class Gillespie_SEIR_TwoStrain_Network {
             //if(Now > 180 && Now < 183){
             //cout << Now << " " << infect_plus_now << " "<< hum_index << " " << hum_data[hum_index] <<  endl;
             //}
-            double rnot_t = exp(-180.0 * hum_data[hum_index] + log(rnot_max - 0.1)) + 0.1;
+            double rnot_t = exp(-180.0 * hum_data[hum_index] + log(rnot_max - 0.8)) + 0.8;
             //cout << Now << " " << time_to_add_to_now << " " << hum_index << " " << hum_data[hum_index] << " " << rnot_t << endl;
             return((rnot_t * gamma / psi) / (1 - rnot_t / psi));
         }
