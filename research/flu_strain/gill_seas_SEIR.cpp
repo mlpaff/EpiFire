@@ -19,7 +19,7 @@ int main(int argc,char *argv[]) {
     shift = atoi( argv[7] );
     string network_type = argv[8];
     
-    int num_reps = 1000;
+    int num_reps = 4000;
 
     Network net = Network("gillespie toy", Network::Undirected);
     net.populate(10000);
