@@ -82,12 +82,12 @@ class Gillespie_SEIR_TwoStrain_Network {
             vector<Node*> nodes = rand_choose_nodes(1,2);
             add_event(intro_time, 'e',  nodes[0]);
 
-            //printStatus();
-            printNetStatus();
+            printStatus();
+            //printNetStatus();
             while (next_event() and Now < start_time + duration) {
                 if ((int) Now > day) {
-                    //printStatus();
-                    printNetStatus();
+                    printStatus();
+                    //printNetStatus();
                     day = (int) Now;
                 }
 
@@ -120,19 +120,19 @@ class Gillespie_SEIR_TwoStrain_Network {
         }
 
         void printStatus(){
-            vector<int> vS1;
-            vS1.push_back(S);
-            vS1.push_back(S21);
-            vector<int> vS2;
-            vS2.push_back(S);
-            vS2.push_back(S12);
-            vector<int> vI1;
-            vI1.push_back(I01);
-            vI1.push_back(I21);
-            vector<int> vI2;
-            vI2.push_back(I02);
-            vI2.push_back(I12);
-            vector<double> meanSDEff = network->mean_eff_deg_states(vS2);
+            //vector<int> vS1;
+            //vS1.push_back(S);
+            //vS1.push_back(S21);
+            //vector<int> vS2;
+            //vS2.push_back(S);
+            //vS2.push_back(S12);
+            //vector<int> vI1;
+            //vI1.push_back(I01);
+            //vI1.push_back(I21);
+            //vector<int> vI2;
+            //vI2.push_back(I02);
+            //vI2.push_back(I12);
+            //vector<double> meanSDEff = network->mean_eff_deg_states(vS2);
 
             cout << (int) Now << ", "
               << state_counts[S] << ", "
@@ -150,13 +150,13 @@ class Gillespie_SEIR_TwoStrain_Network {
               << state_counts[I21] << ", " 
               << state_counts[R] << ", "
               << state_counts[cumI1] << ", "
-              << state_counts[cumI2] <<  ", "
-              << network->mean_deg_states(vS1) <<  ", "
-              << network->mean_deg_states(vS2) <<  ", "
-              << network->mean_deg_states(vI1) <<  ", "
-              << network->mean_deg_states(vI2) << ", "
-              << meanSDEff[0] << ", "
-              << meanSDEff[1] << endl;
+              << state_counts[cumI2] <<  endl;
+              //<< network->mean_deg_states(vS1) <<  ", "
+              //<< network->mean_deg_states(vS2) <<  ", "
+              //<< network->mean_deg_states(vI1) <<  ", "
+              //<< network->mean_deg_states(vI2) << ", "
+              //<< meanSDEff[0] << ", "
+              //<< meanSDEff[1] << endl;
         }
 
         int current_epidemic_size1() {
